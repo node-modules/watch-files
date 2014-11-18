@@ -1,0 +1,36 @@
+{
+  "name": "watch-files",
+  "version": "1.0.0",
+  "description": "watch files by polling",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "watcher", "simple files", "polling"
+  ],
+  "author": {
+    "name": "dead-horse",
+    "email": "dead_horse@qq.com",
+    "url": "http://deadhorse.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:node-modules/watch-files"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "debug": "~2.1.0",
+    "humanize-ms": "~1.0.0",
+    "sdk-base": "~1.0.1"
+  },
+  "devDependencies": {
+    "autod": "1",
+    "istanbul-harmony": "~0.3.0",
+    "mocha": "~2.0.1",
+    "should": "~4.3.0"
+  },
+  "engine": {
+    "node": ">=0.10"
+  }
+}
