@@ -87,4 +87,12 @@ describe('file-watcher', function () {
       fs.writeFileSync(newFixturePath, fixtureContent);
     });
   });
+
+  describe('destroy()', function () {
+    it('should destroy ok', function () {
+      watcher.destroy();
+      watcher.files.should.eql({});
+      (watcher.timer === null).should.be.ok;
+    });
+  });
 });

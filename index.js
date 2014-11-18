@@ -26,8 +26,10 @@ module.exports = Watcher;
 
 /**
  * Watcher constructor
+ *
  * @param {Object} opts
  */
+
 function Watcher(opts) {
   if (!(this instanceof Watcher)) return new Watcher(opts);
   Base.call(this);
@@ -40,18 +42,51 @@ util.inherits(Watcher, Base);
 
 var proto = Watcher.prototype;
 
+/**
+ * add a file into watch list
+ *
+ * @param {String} file
+ * @api public
+ */
+
 proto.add = function (file) {
   file = path.resolve(file);
-  if (this.files[file]) return debug('file path %s exist', file);
+  if (this.files[file] !== undefined) return debug('file path %s exist', file);
 
   this.files[file] = null;
 };
+
+/**
+ * remove a file from watch list
+ *
+ * @param {String} file
+ * @api public
+ */
 
 proto.remove = function (file) {
   file = path.resolve(file);
   if (this.files[file] === undefined) return debug('file path %s not exist', file);
   delete this.files[file];
 };
+
+
+/**
+ * desroy the watcher
+ *
+ * @api public
+ */
+
+proto.destroy = function () {
+  clearInterval(this.timer);
+  this.timer = null;
+  this.files = {};
+};
+
+/**
+ * watch files
+ *
+ * @api private
+ */
 
 proto._watch = function () {
   var watcher = this;
