@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "debug": "~2.1.0",
+    "debug": "*",
     "humanize-ms": "~1.0.0",
     "sdk-base": "~1.0.1"
   },
