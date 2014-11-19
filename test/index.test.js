@@ -10,6 +10,7 @@
  * Module dependencies.
  */
 
+var pedding = require('pedding');
 var Watcher = require('..');
 var path = require('path');
 var fs = require('fs');
@@ -52,9 +53,15 @@ describe('file-watcher', function () {
 
   describe('_watch()', function () {
     it('should get change', function (done) {
+      done = pedding(done, 2);
       watcher.once('change', function (info) {
-        info.file.should.equal(path.resolve(fixturePath));
-        info.type.should.equal('change');
+        info.path.should.equal(path.resolve(fixturePath));
+        info.remove.should.equal(false);
+        done();
+      });
+      watcher.once('all', function (info) {
+        info.path.should.equal(path.resolve(fixturePath));
+        info.remove.should.equal(false);
         done();
       });
 
@@ -62,14 +69,21 @@ describe('file-watcher', function () {
     });
 
     it('should get delete', function (done) {
-      watcher.once('change', function (info) {
-        info.file.should.equal(path.resolve(fixturePath));
-        info.type.should.equal('remove');
+      var done = pedding(done, 2);
+      watcher.once('remove', function (info) {
+        info.path.should.equal(path.resolve(fixturePath));
+        info.remove.should.equal(true);
         fs.writeFileSync(fixturePath, fixtureContent);
         watcher.once('change', function (info) {
-          info.type.should.equal('change');
+          info.remove.should.equal(false);
           done();
         });
+      });
+
+      watcher.once('all', function (info) {
+        info.path.should.equal(path.resolve(fixturePath));
+        info.remove.should.equal(true);
+        done();
       });
 
       fs.unlinkSync(fixturePath);
@@ -77,8 +91,8 @@ describe('file-watcher', function () {
 
     it('should add ok', function (done) {
       watcher.once('change', function (info) {
-        info.file.should.equal(path.resolve(newFixturePath));
-        info.type.should.equal('change');
+        info.path.should.equal(path.resolve(newFixturePath));
+        info.remove.should.equal(false);
         fs.unlinkSync(newFixturePath);
         done();
       });

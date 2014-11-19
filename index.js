@@ -101,7 +101,13 @@ proto._watch = function () {
           debug('file %s not exist', file);
           if (mtime) {
             watcher.files[file] = null;
-            watcher.emit('change', {file: file, type: 'remove'});
+            var info = {
+              remove: true,
+              path: file,
+              stat: null
+            };
+            watcher.emit('remove', info);
+            watcher.emit('all', info);
             debug('file %s removed', file);
           }
         } else {
@@ -115,8 +121,15 @@ proto._watch = function () {
       if (!mtime || stat.mtime > mtime) {
         // changed
         watcher.files[file] = stat.mtime;
+        var info = {
+          remove: false,
+          path: file,
+          stat: stat
+        };
+
         debug('file %s update %s', file, stat.mtime);
-        watcher.emit('change', {file: file, type: 'change'});
+        watcher.emit('change', info);
+        watcher.emit('all', info);
       }
     });
   });

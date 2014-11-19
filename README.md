@@ -43,7 +43,18 @@ watcher.add('file.json');
 
 watcher.on('change', function (info) {
   // info.path => resolved file path
-  // info.type => 'remove' or 'change'
+  // info.remove => false
+  // info.stat (file stat)
+});
+
+watcher.on('remove', function (info) {
+  // info.path => resolved file path
+  // info.remove => true
+});
+
+watcher.on('all', function (info) {
+  // info.path => resolved file path
+  // info.remove => false | true
 });
 
 watcher.on('error', function (err) {
