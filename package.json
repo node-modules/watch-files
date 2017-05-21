@@ -10,7 +10,9 @@
     "index.js"
   ],
   "keywords": [
-    "watcher", "simple files", "polling"
+    "watcher",
+    "simple files",
+    "polling"
   ],
   "author": {
     "name": "dead-horse",
@@ -24,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "*",
-    "humanize-ms": "~1.0.0",
+    "humanize-ms": "~1.2.1",
     "sdk-base": "~1.0.1"
   },
   "devDependencies": {
